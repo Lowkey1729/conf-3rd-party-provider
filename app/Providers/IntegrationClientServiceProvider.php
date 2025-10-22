@@ -8,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 
 class IntegrationClientServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-
     public function register(): void
     {
         $this->app->singleton(DojahClient::class, function () {

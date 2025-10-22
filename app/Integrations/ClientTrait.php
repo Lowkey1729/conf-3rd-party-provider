@@ -2,10 +2,8 @@
 
 namespace App\Integrations;
 
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -15,24 +13,19 @@ trait ClientTrait
     /**
      * Send an HTTP request using the configured client.
      *
-     * @param string $method
-     * @param string $resource
-     * @param array<int|string, mixed> $data
-     * @param string $bodyFormat
-     * @param array<string, string> $headers
-     * @param int $timeout
-     * @return Response
+     * @param  array<int|string, mixed>  $data
+     * @param  array<string, string>  $headers
      */
     protected function sendRequest(
         string $method,
         string $resource,
-        array  $data = [],
+        array $data = [],
         string $bodyFormat = 'json',
-        array  $headers = [],
+        array $headers = [],
         int $timeout = 10
     ): Response {
         try {
-            $fullUrl = rtrim($this->baseUrl(), '/') . '/' . ltrim($resource, '/');
+            $fullUrl = rtrim($this->baseUrl(), '/').'/'.ltrim($resource, '/');
 
             $mergedHeaders = array_merge($this->defaultHeaders(), $headers);
 
@@ -61,8 +54,6 @@ trait ClientTrait
         }
     }
 
-
-
     /**
      * Log a request/response pair.
      */
@@ -83,7 +74,6 @@ trait ClientTrait
         ]);
     }
 
-
     protected function buildEmptyResponse(int $status): Response
     {
         return new Response(new GuzzleResponse(
@@ -93,15 +83,12 @@ trait ClientTrait
         ));
     }
 
-
     abstract protected function baseUrl(): string;
 
     /**
-     *
      * @return array<string, string>
      */
     abstract protected function defaultHeaders(): array;
-
 
     protected function getClientName(): string
     {

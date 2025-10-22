@@ -5,7 +5,6 @@ namespace App\Integrations\QoreId;
 use App\Integrations\ClientTrait;
 use App\Integrations\QoreId\DTOs\BvnFaceVerification\BvnFaceVerificationResponse;
 use App\Integrations\QoreId\DTOs\NinFaceVerification\NinFaceVerificationResponse;
-use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +19,7 @@ class QoreIdClient
         protected string $baseUrl,
         protected string $clientId,
         protected string $secretKey,
-    ) {
-    }
+    ) {}
 
     protected function getAccessToken(): string
     {
@@ -45,7 +43,6 @@ class QoreIdClient
 
     /**
      * @param  array{idNumber: string, photoBase64: string}  $params
-     *
      */
     public function bvnFaceVerification(array $params): BvnFaceVerificationResponse
     {
@@ -60,7 +57,6 @@ class QoreIdClient
 
     /**
      * @param  array{idNumber: string, photoBase64: string}  $params
-     *
      */
     public function ninFaceVerification(array $params): NinFaceVerificationResponse
     {

@@ -9,9 +9,9 @@ use Spatie\LaravelData\Data;
 class UnifiedNinResponse extends Data
 {
     public function __construct(
-        public string  $nin,
-        public string  $firstName,
-        public string  $lastName,
+        public string $nin,
+        public string $firstName,
+        public string $lastName,
         public ?string $middleName,
         #[Computed]
         public ?string $gender,

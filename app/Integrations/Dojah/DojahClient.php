@@ -16,8 +16,7 @@ class DojahClient
         protected string $publicKey,
         protected string $privateKey,
         protected string $baseUrl,
-    ) {
-    }
+    ) {}
 
     protected function baseUrl(): string
     {
@@ -34,8 +33,7 @@ class DojahClient
     }
 
     /**
-     * @param array{bvn: string, selfie_image: string } $params
-     * @return VerifyBVNWithSelfieResponse
+     * @param  array{bvn: string, selfie_image: string }  $params
      */
     public function verifyBVNWithSelfie(array $params): VerifyBVNWithSelfieResponse
     {
@@ -47,7 +45,6 @@ class DojahClient
 
         return VerifyBVNWithSelfieResponse::from($response->object());
     }
-
 
     public function verifyNINWithSelfie(array $params): VerifyNINWithSelfieResponse
     {

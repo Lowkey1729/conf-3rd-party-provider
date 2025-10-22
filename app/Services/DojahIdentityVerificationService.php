@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\Contracts\VerifyBvnWithSelfieInterface;
 use App\Contracts\VerifyNinWithSelfieInterface;
 use App\DTOs\UnifiedBvnResponse;
@@ -26,8 +25,8 @@ class DojahIdentityVerificationService implements VerifyBvnWithSelfieInterface, 
     {
         $response = $this->client->verifyNINWithSelfie(['nin' => $nin, 'selfie_image' => $selfie]);
 
-        if (!$response->entity?->nin) {
-            throw new IdentityVerificationException($response->error ?? "Unable to verify NIN. Please try again.");
+        if (! $response->entity?->nin) {
+            throw new IdentityVerificationException($response->error ?? 'Unable to verify NIN. Please try again.');
         }
 
         return UnifiedNinResponse::from([
@@ -42,7 +41,6 @@ class DojahIdentityVerificationService implements VerifyBvnWithSelfieInterface, 
         ]);
     }
 
-
     /**
      * @throws IdentityVerificationException
      */
@@ -50,8 +48,8 @@ class DojahIdentityVerificationService implements VerifyBvnWithSelfieInterface, 
     {
         $response = $this->client->verifyBVNWithSelfie(['bvn' => $bvn, 'selfie_image' => $selfie]);
 
-        if (!$response->entity?->bvn) {
-            throw new IdentityVerificationException($response->error ?? "Unable to verify BVN. Please try again.");
+        if (! $response->entity?->bvn) {
+            throw new IdentityVerificationException($response->error ?? 'Unable to verify BVN. Please try again.');
         }
 
         return UnifiedBvnResponse::from([

@@ -15,7 +15,7 @@ class VerifyNinWithSelfieController extends Controller
      */
     public function __invoke(VerifyNinWithSelfieRequest $request)
     {
-        $profile =  Profile::query()->first();
+        $profile = Profile::query()->first();
 
         if ($profile->bvn) {
             throw new IdentityVerificationException('Your bvn has already been verified');
@@ -23,13 +23,12 @@ class VerifyNinWithSelfieController extends Controller
 
         $provider = getActiveProvider(ServiceEnum::NIN);
 
-        //you might want to compress your selfie image before sending it down to the upstream client
+        // you might want to compress your selfie image before sending it down to the upstream client
 
         $kycRouter = new IdentityVerificationServiceRouter($provider);
-        $response = $kycRouter->connector()->verifyNinWithSelfie($request->get("nin"), $request->get("selfie"));
+        $response = $kycRouter->connector()->verifyNinWithSelfie($request->get('nin'), $request->get('selfie'));
 
-
-        //You might as well want to save the image selfie after successful validation here
+        // You might as well want to save the image selfie after successful validation here
 
         $profile->update([
             'nin' => $response->nin,

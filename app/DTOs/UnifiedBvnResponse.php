@@ -9,13 +9,13 @@ use Spatie\LaravelData\Data;
 class UnifiedBvnResponse extends Data
 {
     public function __construct(
-        public string  $bvn,
+        public string $bvn,
         #[Computed]
-        public string  $firstName,
+        public string $firstName,
         #[Computed]
-        public string  $lastName,
+        public string $lastName,
         #[Computed]
-        public string  $middleName,
+        public string $middleName,
         #[Computed]
         public ?string $gender,
         public ?string $phoneNumber1,

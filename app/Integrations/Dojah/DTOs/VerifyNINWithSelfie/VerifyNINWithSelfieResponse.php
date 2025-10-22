@@ -3,7 +3,6 @@
 namespace App\Integrations\Dojah\DTOs\VerifyNINWithSelfie;
 
 use App\DTOs\UnifiedNinResponse;
-use Spatie\LaravelData\Attributes\Computed;
 use Spatie\LaravelData\Data;
 
 class VerifyNINWithSelfieResponse extends Data
@@ -11,8 +10,7 @@ class VerifyNINWithSelfieResponse extends Data
     public function __construct(
         public ?EntityData $entity,
         public ?string $error,
-    ) {
-    }
+    ) {}
 
     public function toUnified(): UnifiedNinResponse
     {
