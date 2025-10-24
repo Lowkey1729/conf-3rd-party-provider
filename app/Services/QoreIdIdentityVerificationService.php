@@ -46,7 +46,7 @@ class QoreIdIdentityVerificationService implements VerifyBvnWithSelfieInterface,
      */
     public function verifyBvnWithSelfie(string $bvn, string $selfie): UnifiedBvnResponse
     {
-        $response = resolve(QoreIdClient::class)->bvnFaceVerification([
+        $response = $this->client->bvnFaceVerification([
             'idNumber' => $bvn,
             'photoBase64' => $selfie,
         ]);
