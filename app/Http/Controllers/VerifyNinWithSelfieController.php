@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\Responses\ApiResponseSuccess;
+use App\Enums\ProviderEnum;
 use App\Enums\ServiceEnum;
 use App\Exceptions\IdentityVerificationException;
+use App\Exceptions\ProviderException;
 use App\Models\Profile;
 use App\Requests\VerifyNINWithSelfieRequest;
 use App\Routers\IdentityVerificationServiceRouter;
@@ -13,15 +15,10 @@ class VerifyNinWithSelfieController extends Controller
 {
     /**
      * @throws IdentityVerificationException
+     * @throws ProviderException
      */
     public function __invoke(VerifyNinWithSelfieRequest $request)
     {
-        $profile = Profile::query()->first();
-
-        if ($profile?->nin) {
-            throw new IdentityVerificationException('Your NIN has already been verified');
-        }
-
         $provider = getActiveProvider(ServiceEnum::NIN);
 
         // you might want to compress your selfie image before sending it down to the upstream client
@@ -44,7 +41,7 @@ class VerifyNinWithSelfieController extends Controller
         ]);
 
         return ApiResponseSuccess::make(
-          "NIN verification successful",
+            "NIN verification successful",
         );
     }
 }

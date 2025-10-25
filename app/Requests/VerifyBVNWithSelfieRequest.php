@@ -22,9 +22,4 @@ class VerifyBVNWithSelfieRequest extends FormRequest
     {
         return true;
     }
-
-    protected function passedValidation(): void
-    {
-        Log::info('dojah-bvn', request()->all());
-    }
 }

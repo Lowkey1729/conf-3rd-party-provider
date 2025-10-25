@@ -12,7 +12,7 @@ class VerifyNINWithSelfieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nin' => ['required', 'unique:profiles,nin'],
+            'nin' => ['required'],
             'selfie' => ['required'],
         ];
     }

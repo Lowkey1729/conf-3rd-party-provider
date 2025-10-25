@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\Responses\ApiResponseSuccess;
+use App\Enums\ProviderEnum;
 use App\Enums\ServiceEnum;
 use App\Exceptions\IdentityVerificationException;
+use App\Exceptions\ProviderException;
 use App\Models\Profile;
 use App\Requests\VerifyBVNWithSelfieRequest;
 use App\Routers\IdentityVerificationServiceRouter;
@@ -13,6 +15,7 @@ class VerifyBvnWithSelfieController extends Controller
 {
     /**
      * @throws IdentityVerificationException
+     * @throws ProviderException
      */
     public function __invoke(VerifyBvnWithSelfieRequest $request)
     {

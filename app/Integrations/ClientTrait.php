@@ -34,12 +34,21 @@ trait ClientTrait
                 ->timeout($timeout)
                 ->send($method, $resource, [$bodyFormat => $data]);
 
-            $this->logRequest($method, $fullUrl, $data, $mergedHeaders, $response);
+            Log::channel('daily')->info("{$this->getClientName()} Request", [
+                'method' => strtoupper($method),
+                'url' => $fullUrl,
+                'payload' => $data,
+                'headers' => $headers,
+                'status' => $response->status(),
+                'response' => $response->json(),
+            ]);
 
             return $response;
         } catch (ConnectionException) {
+            Log::error("Connection Timeout in {$this->getClientName()}");
             return $this->buildEmptyResponse(504);
         } catch (\Illuminate\Http\Client\RequestException) {
+            Log::error("Bad Request in {$this->getClientName()}");
             return $this->buildEmptyResponse(400);
         } catch (\Throwable $e) {
             Log::error("Unexpected error in {$this->getClientName()}", [
