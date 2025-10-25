@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\Responses\ApiResponseSuccess;
 use App\Enums\ServiceEnum;
 use App\Exceptions\IdentityVerificationException;
 use App\Models\Profile;
@@ -17,8 +18,8 @@ class VerifyNinWithSelfieController extends Controller
     {
         $profile = Profile::query()->first();
 
-        if ($profile->bvn) {
-            throw new IdentityVerificationException('Your bvn has already been verified');
+        if ($profile?->nin) {
+            throw new IdentityVerificationException('Your NIN has already been verified');
         }
 
         $provider = getActiveProvider(ServiceEnum::NIN);
@@ -30,8 +31,9 @@ class VerifyNinWithSelfieController extends Controller
 
         // You might as well want to save the image selfie after successful validation here
 
-        $profile->update([
+        Profile::query()->updateOrCreate([
             'nin' => $response->nin,
+        ],[
             'gender' => $response->gender,
             'phone_number_1' => $response->phoneNumber1,
             'phone_number_2' => $response->phoneNumber2,
@@ -40,5 +42,9 @@ class VerifyNinWithSelfieController extends Controller
             'last_name' => $response->lastName,
             'dob' => $response->dateOfBirth,
         ]);
+
+        return ApiResponseSuccess::make(
+          "NIN verification successful",
+        );
     }
 }

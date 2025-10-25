@@ -25,7 +25,7 @@ class QoreIdIdentityVerificationService implements VerifyBvnWithSelfieInterface,
     {
         $response = $this->client->ninFaceVerification(['idNumber' => $nin, 'photoBase64' => $selfie]);
 
-        if (! $response->nin?->nin) {
+        if (! $response->id) {
             throw new IdentityVerificationException($response->message ?? 'Unable to verify NIN');
         }
 
@@ -51,7 +51,7 @@ class QoreIdIdentityVerificationService implements VerifyBvnWithSelfieInterface,
             'photoBase64' => $selfie,
         ]);
 
-        if (! $response->nin) {
+        if (! $response->id) {
             throw new IdentityVerificationException($response->message ?? 'Unable to verify BVN');
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\Responses\ApiResponseSuccess;
 use App\Enums\ServiceEnum;
 use App\Exceptions\IdentityVerificationException;
 use App\Models\Profile;
@@ -15,23 +16,19 @@ class VerifyBvnWithSelfieController extends Controller
      */
     public function __invoke(VerifyBvnWithSelfieRequest $request)
     {
-        $profile = Profile::query()->first();
-
-        if ($profile->bvn) {
-            throw new IdentityVerificationException('Your bvn has already been verified');
-        }
 
         $provider = getActiveProvider(ServiceEnum::BVN);
 
         // you might want to compress your selfie image before sending it down to the upstream client
 
         $kycRouter = new IdentityVerificationServiceRouter($provider);
-        $response = $kycRouter->connector()->verifyBvnWithSelfie($request->get('nin'), $request->get('selfie'));
+        $response = $kycRouter->connector()->verifyBvnWithSelfie($request->get('bvn'), $request->get('selfie'));
 
         // You might as well want to save the image selfie after successful validation here
 
-        $profile->update([
-            'bvn' => $response->bvn,
+        Profile::query()->updateOrCreate([
+            'bvn' => $request->get('bvn'),
+        ],[
             'gender' => $response->gender,
             'phone_number_1' => $response->phoneNumber1,
             'first_name' => $response->firstName,
@@ -39,5 +36,9 @@ class VerifyBvnWithSelfieController extends Controller
             'last_name' => $response->lastName,
             'dob' => $response->dateOfBirth,
         ]);
+
+        return ApiResponseSuccess::make(
+            "Bvn verification successful",
+        );
     }
 }

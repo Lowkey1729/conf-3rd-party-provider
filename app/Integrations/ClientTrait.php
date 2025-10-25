@@ -54,9 +54,6 @@ trait ClientTrait
         }
     }
 
-    /**
-     * Log a request/response pair.
-     */
     protected function logRequest(
         string $method,
         string $url,

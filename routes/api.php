@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\VerifyBvnWithSelfieSpaghettiVersion1Controller;
+use App\Http\Controllers\VerifyBvnWithSelfieController;
 use App\Http\Controllers\VerifyNinWithSelfieController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('identity-verification')->group(function () {
-    Route::post("nin", VerifyNinWithSelfieController::class)
-    ->name('identity-verification.nin');
+Route::prefix('/v1/identity-verification')->group(function () {
+    Route::post('nin', VerifyNinWithSelfieController::class)
+        ->name('identity-verification.nin');
 
-    Route::post("bvn", VerifyBvnWithSelfieSpaghettiVersion1Controller::class)
+    Route::post('bvn', VerifyBvnWithSelfieController::class)
         ->name('identity-verification.bvn');
 });

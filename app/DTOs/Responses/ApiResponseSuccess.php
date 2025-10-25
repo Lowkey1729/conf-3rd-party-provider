@@ -59,8 +59,6 @@ class ApiResponseSuccess extends Data
             }
         }
 
-        $var['result']['data'] = $this->data;
-
         return response()->json(
             $var,
             $this->statusCode

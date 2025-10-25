@@ -46,15 +46,15 @@ class DojahClient
         return VerifyBVNWithSelfieResponse::from($response->object());
     }
 
+    /**
+     * @param  array{nin: string, selfie_image: string }  $params
+     */
     public function verifyNINWithSelfie(array $params): VerifyNINWithSelfieResponse
     {
         $response = $this->sendRequest(
             method: Request::METHOD_POST,
             resource: '/v1/kyc/nin/verify',
-            data: [
-                'nin',
-                'selfie_image',
-            ]
+            data: $params
         );
 
         return VerifyNINWithSelfieResponse::from($response->json());

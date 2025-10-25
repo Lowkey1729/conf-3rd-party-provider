@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Models\Profile;
 
 class VerifyBvnWithSelfieSpaghettiVersion1Controller extends Controller
 {
@@ -31,8 +31,8 @@ class VerifyBvnWithSelfieSpaghettiVersion1Controller extends Controller
             $url = 'https://api.dojah.io/v1/kyc/bvn/verify';
             $headers = [
                 'Content-Type' => 'application/json',
-                'AppId' => env("DOJAH_APP_ID"),
-                'Authorization' => env("DOJAH_PRIVATE_KEY"),
+                'AppId' => env('DOJAH_APP_ID'),
+                'Authorization' => env('DOJAH_PRIVATE_KEY'),
             ];
             $payload = [
                 'bvn' => $bvn,
@@ -85,13 +85,13 @@ class VerifyBvnWithSelfieSpaghettiVersion1Controller extends Controller
             $type = $request->get('type', 'bvn');
 
             if ($type === 'bvn') {
-                $response = Http::withHeaders(['Authorization' => 'Bearer ' . $accessToken])
+                $response = Http::withHeaders(['Authorization' => 'Bearer '.$accessToken])
                     ->post($bvnUrl, [
                         'idNumber' => $bvn,
                         'photoBase64' => $selfie,
                     ]);
             } else {
-                $response = Http::withHeaders(['Authorization' => 'Bearer ' . $accessToken])
+                $response = Http::withHeaders(['Authorization' => 'Bearer '.$accessToken])
                     ->post($ninUrl, [
                         'idNumber' => $request->get('nin'),
                         'photoBase64' => $selfie,
@@ -131,7 +131,7 @@ class VerifyBvnWithSelfieSpaghettiVersion1Controller extends Controller
 
         return [
             'status' => 'success',
-            'message' => 'Verification completed'
+            'message' => 'Verification completed',
         ];
     }
 }
