@@ -63,23 +63,6 @@ trait ClientTrait
         }
     }
 
-    protected function logRequest(
-        string $method,
-        string $url,
-        array $payload,
-        array $headers,
-        Response $response
-    ): void {
-        Log::channel('daily')->info("{$this->getClientName()} Request", [
-            'method' => strtoupper($method),
-            'url' => $url,
-            'payload' => $payload,
-            'headers' => $headers,
-            'status' => $response->status(),
-            'response' => $response->json(),
-        ]);
-    }
-
     protected function buildEmptyResponse(int $status): Response
     {
         return new Response(new GuzzleResponse(
